@@ -31,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.border.TitledBorder;
 
 
 @SuppressWarnings("serial")
@@ -87,14 +88,17 @@ public class comboTest extends JFrame{
 		
 			
 		cbxProvince=new JComboBox<>(getcbxMProv());
-		cbxProvince.setBounds(10, 11, 200, 46);
+		cbxProvince.setBorder(new TitledBorder(null, "Province", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		cbxProvince.setBounds(10, 56, 200, 46);
 		getContentPane().add(cbxProvince);
 		
 		cbxMunCity = new JComboBox<>();
-		cbxMunCity.setBounds(256, 11, 200, 46);
+		cbxMunCity.setBorder(new TitledBorder(null, "Municipality", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		cbxMunCity.setBounds(258, 56, 200, 46);
 		getContentPane().add(cbxMunCity);
 		
 		cbxBrgy = new JComboBox<>();
+		cbxBrgy.setBorder(new TitledBorder(null, "Barangay", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		cbxBrgy.setBounds(126, 130, 200, 46);
 		getContentPane().add(cbxBrgy);
 		
@@ -135,32 +139,30 @@ public class comboTest extends JFrame{
 						try {
 							province=getProvince();
 						
-						for(Province pro:province) {
-							if(pro.getProvName().equals(cbxProvince.getSelectedItem())) {
-								System.out.println("Regcode: "+pro.getRegCode());
-							}
+							for(Province pro:province) {
+								if(pro.getProvName().equals(cbxProvince.getSelectedItem())) {
+									System.out.println("Regcode: "+pro.getRegCode());
 						
-						munCity=getMunCity();
-						for(MunCity mun: munCity) {
-							if (mun.getMunCityName().equals(cbxMunCity.getSelectedItem()) && mun.getProvCode()==pro.getProvCode() && mun.getRegDesc()==pro.getRegCode()){
-								System.out.println(mun.getMunCityCode());
-								System.out.println("RegDesc: " + mun.getRegDesc());
-							
-								barangay=new ArrayList<>();
-								for(Barangay brgy:barangay) {
-										
-										
-											cbxMBrgy.addElement(brgy.getBrgyName());
-										
-										
-										
-									}
-								}		
+								munCity=getMunCity();
+								for(MunCity mun: munCity) {
+									if (mun.getMunCityName().equals(cbxMunCity.getSelectedItem()) && mun.getProvCode()==pro.getProvCode() && mun.getRegDesc()==pro.getRegCode()){
+										System.out.println(mun.getMunCityCode());
+										System.out.println("RegDesc: " + mun.getRegDesc());
+									
+										barangay=getBarangay();
+										for(Barangay brgy:barangay) {												
+													if(brgy.getMunCityCode()==mun.getMunCityCode()) {
+													cbxMBrgy.addElement(brgy.getBrgyName());
+													}
+												
+												
+											}
+										}		
 							
 					
 						
-							
-						}
+								}
+							}
 						}
 						} catch (JsonIOException | JsonSyntaxException | FileNotFoundException e1) {
 							// TODO Auto-generated catch block
